@@ -191,10 +191,11 @@ public class PreparedGetNumberOfResultsTest {
         final GetResolver<Integer> standardGetResolver
                 = PreparedGetNumberOfResults.CompleteBuilder.STANDARD_GET_RESOLVER;
 
+        final StorIOSQLite storIOSQLite = mock(StorIOSQLite.class);
         final Cursor cursor = mock(Cursor.class);
 
         when(cursor.getCount()).thenReturn(12314);
 
-        assertThat(standardGetResolver.mapFromCursor(cursor)).isEqualTo(12314);
+        assertThat(standardGetResolver.mapFromCursor(storIOSQLite, cursor)).isEqualTo(12314);
     }
 }

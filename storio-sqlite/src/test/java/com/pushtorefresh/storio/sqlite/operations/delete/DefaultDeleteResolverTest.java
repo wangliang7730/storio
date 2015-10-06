@@ -39,7 +39,7 @@ public class DefaultDeleteResolverTest {
         final DefaultDeleteResolver<TestItem> defaultDeleteResolver = new DefaultDeleteResolver<TestItem>() {
             @NonNull
             @Override
-            public DeleteQuery mapToDeleteQuery(@NonNull TestItem testItem) {
+            public DeleteQuery mapToDeleteQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem testItem) {
                 return deleteQuery;
             }
         };

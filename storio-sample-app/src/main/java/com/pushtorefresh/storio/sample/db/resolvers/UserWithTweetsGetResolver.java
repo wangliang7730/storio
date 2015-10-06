@@ -21,25 +21,16 @@ public final class UserWithTweetsGetResolver extends GetResolver<UserWithTweets>
     @NonNull
     private final GetResolver<User> userGetResolver;
 
-    // Sorry for this hack :(
-    // We will pass you an instance of StorIO
-    // into the mapFromCursor() in v2.0.0.
-    //
-    // At the moment, you can save this instance in performGet() and then null it at the end
-    @NonNull
-    private final ThreadLocal<StorIOSQLite> storIOSQLiteFromPerformGet = new ThreadLocal<StorIOSQLite>();
-
     public UserWithTweetsGetResolver(@NonNull GetResolver<User> userGetResolver) {
         this.userGetResolver = userGetResolver;
     }
 
     @NonNull
     @Override
-    public UserWithTweets mapFromCursor(@NonNull Cursor cursor) {
-        final StorIOSQLite storIOSQLite = storIOSQLiteFromPerformGet.get();
+    public UserWithTweets mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {
 
         // Or you can manually parse cursor (it will be sliiightly faster)
-        final User user = userGetResolver.mapFromCursor(cursor);
+        final User user = userGetResolver.mapFromCursor(storIOSQLite, cursor);
 
         // Yep, you can reuse StorIO here!
         // Or, you can do manual low level requests here
@@ -62,14 +53,12 @@ public final class UserWithTweetsGetResolver extends GetResolver<UserWithTweets>
     @NonNull
     @Override
     public Cursor performGet(@NonNull StorIOSQLite storIOSQLite, @NonNull RawQuery rawQuery) {
-        storIOSQLiteFromPerformGet.set(storIOSQLite);
         return storIOSQLite.internal().rawQuery(rawQuery);
     }
 
     @NonNull
     @Override
     public Cursor performGet(@NonNull StorIOSQLite storIOSQLite, @NonNull Query query) {
-        storIOSQLiteFromPerformGet.set(storIOSQLite);
         return storIOSQLite.internal().query(query);
     }
 }

@@ -57,6 +57,7 @@ public class DeleteResolverGeneratorTest {
         assertThat(out.toString()).isEqualTo("package com.test;\n" +
                 "\n" +
                 "import android.support.annotation.NonNull;\n" +
+                "import com.pushtorefresh.storio.sqlite.StorIOSQLite;\n" +
                 "import com.pushtorefresh.storio.sqlite.operations.delete.DefaultDeleteResolver;\n" +
                 "import com.pushtorefresh.storio.sqlite.queries.DeleteQuery;\n" +
                 "import java.lang.Override;\n" +
@@ -70,7 +71,7 @@ public class DeleteResolverGeneratorTest {
                 "     */\n" +
                 "    @Override\n" +
                 "    @NonNull\n" +
-                "    protected DeleteQuery mapToDeleteQuery(@NonNull TestItem object) {\n" +
+                "    protected DeleteQuery mapToDeleteQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {\n" +
                 "        return DeleteQuery.builder()\n" +
                 "            .table(\"test_table\")\n" +
                 "            .where(null)\n" +

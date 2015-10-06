@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.operations.delete.DefaultDeleteResolver;
 import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResolver;
 import com.pushtorefresh.storio.sqlite.operations.get.DefaultGetResolver;
@@ -32,7 +33,7 @@ public class TweetTableMeta {
     static final PutResolver<Tweet> PUT_RESOLVER = new DefaultPutResolver<Tweet>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull Tweet object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull Tweet object) {
             return InsertQuery.builder()
                     .table(TABLE)
                     .build();
@@ -40,7 +41,7 @@ public class TweetTableMeta {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull Tweet tweet) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull Tweet tweet) {
             return UpdateQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_ID + " = ?")
@@ -50,7 +51,7 @@ public class TweetTableMeta {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull Tweet tweet) {
+        protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull Tweet tweet) {
             final ContentValues contentValues = new ContentValues(3);
 
             contentValues.put(COLUMN_ID, tweet.id());
@@ -63,7 +64,7 @@ public class TweetTableMeta {
     static final GetResolver<Tweet> GET_RESOLVER = new DefaultGetResolver<Tweet>() {
         @NonNull
         @Override
-        public Tweet mapFromCursor(@NonNull Cursor cursor) {
+        public Tweet mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {
             return Tweet.newInstance(
                     cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
                     cursor.getLong(cursor.getColumnIndex(COLUMN_AUTHOR_ID)),
@@ -74,7 +75,7 @@ public class TweetTableMeta {
     static final DeleteResolver<Tweet> DELETE_RESOLVER = new DefaultDeleteResolver<Tweet>() {
         @NonNull
         @Override
-        public DeleteQuery mapToDeleteQuery(@NonNull Tweet object) {
+        public DeleteQuery mapToDeleteQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull Tweet object) {
             return DeleteQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_ID + " = ?")

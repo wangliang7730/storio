@@ -41,7 +41,7 @@ public class UserTableMeta {
     static final PutResolver<User> PUT_RESOLVER = new DefaultPutResolver<User>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull User user) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull User user) {
             return InsertQuery.builder()
                     .table(TABLE)
                     .build();
@@ -49,7 +49,7 @@ public class UserTableMeta {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull User user) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull User user) {
             return UpdateQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_ID + " = ?")
@@ -59,7 +59,7 @@ public class UserTableMeta {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull User user) {
+        protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull User user) {
             final ContentValues contentValues = new ContentValues(2);
 
             contentValues.put(COLUMN_ID, user.id());
@@ -83,7 +83,7 @@ public class UserTableMeta {
     static final GetResolver<User> GET_RESOLVER = new DefaultGetResolver<User>() {
         @NonNull
         @Override
-        public User mapFromCursor(@NonNull Cursor cursor) {
+        public User mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {
             return User.newInstance(
                     cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL))
@@ -93,7 +93,7 @@ public class UserTableMeta {
     static final DeleteResolver<User> DELETE_RESOLVER = new DefaultDeleteResolver<User>() {
         @NonNull
         @Override
-        public DeleteQuery mapToDeleteQuery(@NonNull User user) {
+        public DeleteQuery mapToDeleteQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull User user) {
             return DeleteQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_ID + " = ?")

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.operations.delete.DefaultDeleteResolver;
 import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResolver;
 import com.pushtorefresh.storio.sqlite.operations.get.DefaultGetResolver;
@@ -24,7 +25,7 @@ class UserTableMeta {
     static final PutResolver<User> PUT_RESOLVER = new DefaultPutResolver<User>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull User object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull User object) {
             return InsertQuery.builder()
                     .table(TABLE)
                     .build();
@@ -32,7 +33,7 @@ class UserTableMeta {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull User user) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull User user) {
             return UpdateQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_EMAIL + " = ?")
@@ -42,21 +43,21 @@ class UserTableMeta {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull User object) {
+        protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull User object) {
             return mock(ContentValues.class);
         }
     };
     static final GetResolver<User> GET_RESOLVER = new DefaultGetResolver<User>() {
         @NonNull
         @Override
-        public User mapFromCursor(@NonNull Cursor cursor) {
+        public User mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {
             return mock(User.class);
         }
     };
     static final DeleteResolver<User> DELETE_RESOLVER = new DefaultDeleteResolver<User>() {
         @NonNull
         @Override
-        public DeleteQuery mapToDeleteQuery(@NonNull User user) {
+        public DeleteQuery mapToDeleteQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull User user) {
             return DeleteQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_EMAIL + " = ?")

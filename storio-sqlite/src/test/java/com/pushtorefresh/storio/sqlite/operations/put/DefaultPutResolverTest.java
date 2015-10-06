@@ -67,13 +67,13 @@ public class DefaultPutResolverTest {
         final PutResolver<TestItem> putResolver = new DefaultPutResolver<TestItem>() {
             @NonNull
             @Override
-            protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+            protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {
                 return expectedInsertQuery;
             }
 
             @NonNull
             @Override
-            protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+            protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {
                 return UpdateQuery.builder()
                         .table(TestItem.TABLE)
                         .where(TestItem.COLUMN_ID + " = ?")
@@ -83,7 +83,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected ContentValues mapToContentValues(@NonNull TestItem object) {
+            protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {
                 return TestItem.MAP_TO_CONTENT_VALUES.call(object);
             }
         };
@@ -163,14 +163,14 @@ public class DefaultPutResolverTest {
         final PutResolver<TestItem> putResolver = new DefaultPutResolver<TestItem>() {
             @NonNull
             @Override
-            protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+            protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {
                 fail("Should not be called");
                 return null;
             }
 
             @NonNull
             @Override
-            protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+            protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {
                 return UpdateQuery.builder()
                         .table(TestItem.TABLE)
                         .where(TestItem.COLUMN_ID + " = ?")
@@ -180,7 +180,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected ContentValues mapToContentValues(@NonNull TestItem object) {
+            protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {
                 return TestItem.MAP_TO_CONTENT_VALUES.call(object);
             }
         };

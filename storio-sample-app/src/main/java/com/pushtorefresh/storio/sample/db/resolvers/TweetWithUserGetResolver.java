@@ -9,6 +9,7 @@ import com.pushtorefresh.storio.sample.db.entities.TweetWithUser;
 import com.pushtorefresh.storio.sample.db.entities.User;
 import com.pushtorefresh.storio.sample.db.tables.TweetsTable;
 import com.pushtorefresh.storio.sample.db.tables.UsersTable;
+import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.operations.get.DefaultGetResolver;
 
 public class TweetWithUserGetResolver extends DefaultGetResolver<TweetWithUser> {
@@ -16,7 +17,7 @@ public class TweetWithUserGetResolver extends DefaultGetResolver<TweetWithUser> 
     // We expect that cursor will contain both Tweet and User: SQL JOIN
     @NonNull
     @Override
-    public TweetWithUser mapFromCursor(@NonNull Cursor cursor) {
+    public TweetWithUser mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {
         final Tweet tweet = Tweet.newTweet(
                 cursor.getLong(cursor.getColumnIndexOrThrow(TweetsTable.COLUMN_ID)),
                 cursor.getString(cursor.getColumnIndexOrThrow(TweetsTable.COLUMN_AUTHOR)),

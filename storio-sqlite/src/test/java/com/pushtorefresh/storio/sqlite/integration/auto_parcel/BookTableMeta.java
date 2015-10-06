@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.operations.delete.DefaultDeleteResolver;
 import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResolver;
 import com.pushtorefresh.storio.sqlite.operations.get.DefaultGetResolver;
@@ -42,7 +43,7 @@ final class BookTableMeta {
     static final PutResolver<Book> PUT_RESOLVER = new DefaultPutResolver<Book>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull Book object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull Book object) {
             return InsertQuery.builder()
                     .table(TABLE)
                     .build();
@@ -50,7 +51,7 @@ final class BookTableMeta {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull Book book) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull Book book) {
             return UpdateQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_ID + " = ?")
@@ -60,7 +61,7 @@ final class BookTableMeta {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull Book book) {
+        protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull Book book) {
             final ContentValues contentValues = new ContentValues(3);
 
             contentValues.put(COLUMN_ID, book.id());
@@ -75,7 +76,7 @@ final class BookTableMeta {
     static final GetResolver<Book> GET_RESOLVER = new DefaultGetResolver<Book>() {
         @NonNull
         @Override
-        public Book mapFromCursor(@NonNull Cursor cursor) {
+        public Book mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {
             return Book.builder()
                     .id(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)))
                     .title(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)))
@@ -88,7 +89,7 @@ final class BookTableMeta {
     static final DeleteResolver<Book> DELETE_RESOLVER = new DefaultDeleteResolver<Book>() {
         @NonNull
         @Override
-        protected DeleteQuery mapToDeleteQuery(@NonNull Book book) {
+        protected DeleteQuery mapToDeleteQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull Book book) {
             return DeleteQuery.builder()
                     .table(TABLE)
                     .where(COLUMN_ID + " = ?")

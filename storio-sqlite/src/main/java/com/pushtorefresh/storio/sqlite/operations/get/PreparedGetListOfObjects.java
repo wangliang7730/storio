@@ -110,7 +110,7 @@ public final class PreparedGetListOfObjects<T> extends PreparedGet<List<T>> {
                 final List<T> list = new ArrayList<T>(count);
 
                 while (cursor.moveToNext()) {
-                    list.add(getResolver.mapFromCursor(cursor));
+                    list.add(getResolver.mapFromCursor(storIOSQLite, cursor));
                 }
 
                 return unmodifiableList(list);

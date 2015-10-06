@@ -359,7 +359,7 @@ public class PreparedGetListOfObjectsTest {
             when(getResolver.performGet(eq(storIOSQLite), any(Query.class)))
                     .thenReturn(cursor);
 
-            when(getResolver.mapFromCursor(cursor))
+            when(getResolver.mapFromCursor(storIOSQLite, cursor))
                     .thenThrow(new IllegalStateException("test exception"));
 
             PreparedGetListOfObjects<Object> preparedGetListOfObjects =
@@ -381,7 +381,7 @@ public class PreparedGetListOfObjectsTest {
                 verify(cursor).close();
 
                 verify(getResolver).performGet(eq(storIOSQLite), any(Query.class));
-                verify(getResolver).mapFromCursor(cursor);
+                verify(getResolver).mapFromCursor(storIOSQLite, cursor);
                 verify(cursor).getCount();
                 verify(cursor).moveToNext();
 
@@ -408,7 +408,7 @@ public class PreparedGetListOfObjectsTest {
             when(getResolver.performGet(eq(storIOSQLite), any(Query.class)))
                     .thenReturn(cursor);
 
-            when(getResolver.mapFromCursor(cursor))
+            when(getResolver.mapFromCursor(storIOSQLite, cursor))
                     .thenThrow(new IllegalStateException("test exception"));
 
             PreparedGetListOfObjects<Object> preparedGetListOfObjects =
@@ -441,7 +441,7 @@ public class PreparedGetListOfObjectsTest {
             //noinspection unchecked
             verify(storIOSQLite).observeChangesInTables(anySet());
             verify(getResolver).performGet(eq(storIOSQLite), any(Query.class));
-            verify(getResolver).mapFromCursor(cursor);
+            verify(getResolver).mapFromCursor(storIOSQLite, cursor);
             verify(cursor).getCount();
             verify(cursor).moveToNext();
 

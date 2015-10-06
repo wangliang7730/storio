@@ -3,6 +3,7 @@ package com.pushtorefresh.storio.sqlite.design;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.sqlite.StorIOSQLite;
 import com.pushtorefresh.storio.sqlite.operations.put.DefaultPutResolver;
 import com.pushtorefresh.storio.sqlite.operations.put.PutResolver;
 import com.pushtorefresh.storio.sqlite.operations.put.PutResult;
@@ -23,7 +24,7 @@ public class PutOperationDesignTest extends OperationDesignTest {
     private static final PutResolver<ContentValues> CONTENT_VALUES_PUT_RESOLVER = new DefaultPutResolver<ContentValues>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull ContentValues object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull ContentValues object) {
             return InsertQuery.builder()
                     .table("some_table")
                     .build();
@@ -31,7 +32,7 @@ public class PutOperationDesignTest extends OperationDesignTest {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull ContentValues contentValues) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull ContentValues contentValues) {
             return UpdateQuery.builder()
                     .table("some_table") // it's just a sample, no need to specify params
                     .build();
@@ -39,7 +40,7 @@ public class PutOperationDesignTest extends OperationDesignTest {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull ContentValues contentValues) {
+        protected ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull ContentValues contentValues) {
             return contentValues; // easy
         }
     };

@@ -190,8 +190,9 @@ public class PreparedGetCursorTest {
         final GetResolver<Cursor> standardGetResolver
                 = PreparedGetCursor.CompleteBuilder.STANDARD_GET_RESOLVER;
 
+        final StorIOSQLite storIOSQLite = mock(StorIOSQLite.class);
         final Cursor cursor = mock(Cursor.class);
 
-        assertThat(standardGetResolver.mapFromCursor(cursor)).isSameAs(cursor);
+        assertThat(standardGetResolver.mapFromCursor(storIOSQLite, cursor)).isSameAs(cursor);
     }
 }

@@ -58,6 +58,7 @@ public class PutResolverGeneratorTest {
                 "\n" +
                 "import android.content.ContentValues;\n" +
                 "import android.support.annotation.NonNull;\n" +
+                "import com.pushtorefresh.storio.sqlite.StorIOSQLite;\n" +
                 "import com.pushtorefresh.storio.sqlite.operations.put.DefaultPutResolver;\n" +
                 "import com.pushtorefresh.storio.sqlite.queries.InsertQuery;\n" +
                 "import com.pushtorefresh.storio.sqlite.queries.UpdateQuery;\n" +
@@ -72,7 +73,7 @@ public class PutResolverGeneratorTest {
                 "     */\n" +
                 "    @Override\n" +
                 "    @NonNull\n" +
-                "    protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {\n" +
+                "    protected InsertQuery mapToInsertQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {\n" +
                 "        return InsertQuery.builder()\n" +
                 "            .table(\"test_table\")\n" +
                 "            .build();\n" +
@@ -83,7 +84,7 @@ public class PutResolverGeneratorTest {
                 "     */\n" +
                 "    @Override\n" +
                 "    @NonNull\n" +
-                "    protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {\n" +
+                "    protected UpdateQuery mapToUpdateQuery(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {\n" +
                 "        return UpdateQuery.builder()\n" +
                 "            .table(\"test_table\")\n" +
                 "            .where(\"column1 = ?\")\n" +
@@ -96,7 +97,7 @@ public class PutResolverGeneratorTest {
                 "     */\n" +
                 "    @Override\n" +
                 "    @NonNull\n" +
-                "    public ContentValues mapToContentValues(@NonNull TestItem object) {\n" +
+                "    public ContentValues mapToContentValues(@NonNull StorIOSQLite storIOSQLite, @NonNull TestItem object) {\n" +
                 "        ContentValues contentValues = new ContentValues(2);\n" +
                 "\n" +
                 "        contentValues.put(\"column1\", object.column1Field);\n" +

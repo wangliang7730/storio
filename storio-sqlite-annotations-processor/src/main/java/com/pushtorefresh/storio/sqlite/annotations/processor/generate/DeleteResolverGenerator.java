@@ -46,9 +46,12 @@ public class DeleteResolverGenerator {
                 .addAnnotation(ANDROID_NON_NULL_ANNOTATION_CLASS_NAME)
                 .addModifiers(PROTECTED)
                 .returns(ClassName.get("com.pushtorefresh.storio.sqlite.queries", "DeleteQuery"))
-                .addParameter(ParameterSpec.builder(storIOSQLiteTypeClassName, "object")
+                .addParameter(ParameterSpec.builder(ClassName.get("com.pushtorefresh.storio.sqlite", "StorIOSQLite"), "storIOSQLite")
                         .addAnnotation(ANDROID_NON_NULL_ANNOTATION_CLASS_NAME)
                         .build())
+                .addParameter(ParameterSpec.builder(storIOSQLiteTypeClassName, "object")
+                    .addAnnotation(ANDROID_NON_NULL_ANNOTATION_CLASS_NAME)
+                    .build())
                 .addCode("return DeleteQuery.builder()\n" +
                                 INDENT + ".table($S)\n" +
                                 INDENT + ".where($S)\n" +

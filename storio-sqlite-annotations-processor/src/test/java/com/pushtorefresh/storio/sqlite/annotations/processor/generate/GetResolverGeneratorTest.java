@@ -59,6 +59,7 @@ public class GetResolverGeneratorTest {
                 "\n" +
                 "import android.database.Cursor;\n" +
                 "import android.support.annotation.NonNull;\n" +
+                "import com.pushtorefresh.storio.sqlite.StorIOSQLite;\n" +
                 "import com.pushtorefresh.storio.sqlite.operations.get.DefaultGetResolver;\n" +
                 "import java.lang.Override;\n" +
                 "\n" +
@@ -71,7 +72,7 @@ public class GetResolverGeneratorTest {
                 "     */\n" +
                 "    @Override\n" +
                 "    @NonNull\n" +
-                "    public TestItem mapFromCursor(@NonNull Cursor cursor) {\n" +
+                "    public TestItem mapFromCursor(@NonNull StorIOSQLite storIOSQLite, @NonNull Cursor cursor) {\n" +
                 "        TestItem object = new TestItem();\n" +
                 "\n" +
                 "        object.field1 = cursor.getInt(cursor.getColumnIndex(\"column1\")) == 1;\n" +
