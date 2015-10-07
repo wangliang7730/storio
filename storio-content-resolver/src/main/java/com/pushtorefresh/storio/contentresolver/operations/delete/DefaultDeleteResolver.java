@@ -17,11 +17,12 @@ public abstract class DefaultDeleteResolver<T> extends DeleteResolver<T> {
     /**
      * Converts object of required type to {@link DeleteQuery}.
      *
+     * @param storIOContentResolver instance of {@link StorIOContentResolver}.
      * @param object non-null object that should be converted to {@link DeleteQuery}.
      * @return non-null {@link DeleteQuery}.
      */
     @NonNull
-    protected abstract DeleteQuery mapToDeleteQuery(@NonNull T object);
+    protected abstract DeleteQuery mapToDeleteQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull T object);
 
     /**
      * {@inheritDoc}
@@ -29,7 +30,7 @@ public abstract class DefaultDeleteResolver<T> extends DeleteResolver<T> {
     @NonNull
     @Override
     public DeleteResult performDelete(@NonNull StorIOContentResolver storIOContentResolver, @NonNull T object) {
-        final DeleteQuery deleteQuery = mapToDeleteQuery(object);
+        final DeleteQuery deleteQuery = mapToDeleteQuery(storIOContentResolver, object);
         final int numberOfRowsDeleted = storIOContentResolver.internal().delete(deleteQuery);
         return DeleteResult.newInstance(numberOfRowsDeleted, deleteQuery.uri());
     }

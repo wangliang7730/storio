@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.pushtorefresh.storio.contentresolver.BuildConfig;
 import com.pushtorefresh.storio.contentresolver.Changes;
+import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.put.DefaultPutResolver;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResolver;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResult;
@@ -33,7 +34,7 @@ public class PutOperationTest extends IntegrationTest {
     private final PutResolver<ContentValues> testItemContentValuesPutResolver = new DefaultPutResolver<ContentValues>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull ContentValues object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull ContentValues object) {
             return InsertQuery.builder()
                     .uri(TestItem.CONTENT_URI)
                     .build();
@@ -41,7 +42,7 @@ public class PutOperationTest extends IntegrationTest {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull ContentValues object) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull ContentValues object) {
             return UpdateQuery.builder()
                     .uri(TestItem.CONTENT_URI)
                     .where(TestItem.COLUMN_ID + "=?")
@@ -51,7 +52,7 @@ public class PutOperationTest extends IntegrationTest {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull ContentValues object) {
+        protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull ContentValues object) {
             return object;
         }
     };

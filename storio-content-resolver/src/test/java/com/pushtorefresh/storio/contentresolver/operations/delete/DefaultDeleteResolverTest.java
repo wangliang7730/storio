@@ -43,7 +43,7 @@ public class DefaultDeleteResolverTest {
         final DefaultDeleteResolver<TestItem> defaultDeleteResolver = new DefaultDeleteResolver<TestItem>() {
             @NonNull
             @Override
-            protected DeleteQuery mapToDeleteQuery(@NonNull TestItem object) {
+            protected DeleteQuery mapToDeleteQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 assertThat(object).isSameAs(testItem);
                 return expectedDeleteQuery;
             }

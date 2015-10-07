@@ -23,29 +23,32 @@ public abstract class DefaultPutResolver<T> extends PutResolver<T> {
     /**
      * Converts object of required type to {@link InsertQuery}.
      *
+     * @param storIOContentResolver instance of {@link StorIOContentResolver}.
      * @param object non-null object that should be converted to {@link InsertQuery}.
      * @return non-null {@link InsertQuery}.
      */
     @NonNull
-    protected abstract InsertQuery mapToInsertQuery(@NonNull T object);
+    protected abstract InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull T object);
 
     /**
      * Converts object of required type to {@link UpdateQuery}.
      *
+     * @param storIOContentResolver instance of {@link StorIOContentResolver}.
      * @param object non-null object that should be converted to {@link UpdateQuery}.
      * @return non-null {@link UpdateQuery}.
      */
     @NonNull
-    protected abstract UpdateQuery mapToUpdateQuery(@NonNull T object);
+    protected abstract UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull T object);
 
     /**
      * Converts object of required type to {@link ContentValues}.
      *
+     * @param storIOContentResolver instance of {@link StorIOContentResolver}.
      * @param object non-null object that should be converted to {@link ContentValues}.
      * @return non-null {@link ContentValues}.
      */
     @NonNull
-    protected abstract ContentValues mapToContentValues(@NonNull T object);
+    protected abstract ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull T object);
 
     /**
      * {@inheritDoc}
@@ -53,7 +56,7 @@ public abstract class DefaultPutResolver<T> extends PutResolver<T> {
     @NonNull
     @Override
     public PutResult performPut(@NonNull StorIOContentResolver storIOContentResolver, @NonNull T object) {
-        final UpdateQuery updateQuery = mapToUpdateQuery(object);
+        final UpdateQuery updateQuery = mapToUpdateQuery(storIOContentResolver, object);
 
         final Query query = Query.builder()
                 .uri(updateQuery.uri())
@@ -66,10 +69,10 @@ public abstract class DefaultPutResolver<T> extends PutResolver<T> {
         final Cursor cursor = internal.query(query);
 
         try {
-            final ContentValues contentValues = mapToContentValues(object);
+            final ContentValues contentValues = mapToContentValues(storIOContentResolver, object);
 
             if (cursor.getCount() == 0) {
-                final InsertQuery insertQuery = mapToInsertQuery(object);
+                final InsertQuery insertQuery = mapToInsertQuery(storIOContentResolver, object);
                 final Uri insertedUri = internal.insert(insertQuery, contentValues);
                 return PutResult.newInsertResult(insertedUri, insertQuery.uri());
             } else {

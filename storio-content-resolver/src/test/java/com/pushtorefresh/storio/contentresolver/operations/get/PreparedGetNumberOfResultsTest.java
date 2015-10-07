@@ -117,9 +117,10 @@ public class PreparedGetNumberOfResultsTest {
                 = PreparedGetNumberOfResults.CompleteBuilder.STANDARD_GET_RESOLVER;
 
         final Cursor cursor = mock(Cursor.class);
+        final StorIOContentResolver storIOContentResolver = mock(StorIOContentResolver.class);
 
         when(cursor.getCount()).thenReturn(12314);
 
-        assertThat(standardGetResolver.mapFromCursor(cursor)).isEqualTo(12314);
+        assertThat(standardGetResolver.mapFromCursor(storIOContentResolver, cursor)).isEqualTo(12314);
     }
 }

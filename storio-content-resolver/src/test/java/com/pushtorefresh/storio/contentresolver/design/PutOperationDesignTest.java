@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.put.DefaultPutResolver;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResolver;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResult;
@@ -26,7 +27,7 @@ public class PutOperationDesignTest extends OperationDesignTest {
     final PutResolver<ContentValues> putResolverForContentValues = new DefaultPutResolver<ContentValues>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull ContentValues object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull ContentValues object) {
             return InsertQuery.builder()
                     .uri(mock(Uri.class))
                     .build();
@@ -34,7 +35,7 @@ public class PutOperationDesignTest extends OperationDesignTest {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull ContentValues object) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull ContentValues object) {
             return UpdateQuery.builder()
                     .uri(mock(Uri.class))
                     .build();
@@ -42,7 +43,7 @@ public class PutOperationDesignTest extends OperationDesignTest {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull ContentValues contentValues) {
+        protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull ContentValues contentValues) {
             return contentValues; // easy
         }
     };

@@ -76,11 +76,12 @@ public class PreparedGetCursorTest {
     @Test
     public void checkThatStandardGetResolverDoesNotModifyCursor() {
         Cursor cursor = mock(Cursor.class);
+        StorIOContentResolver storIOContentResolver = mock(StorIOContentResolver.class);
 
         Cursor cursorAfterMap = PreparedGetCursor
                 .CompleteBuilder
                 .STANDARD_GET_RESOLVER
-                .mapFromCursor(cursor);
+                .mapFromCursor(storIOContentResolver, cursor);
 
         assertThat(cursorAfterMap).isEqualTo(cursor);
     }

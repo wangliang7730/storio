@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DefaultDeleteResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DeleteResolver;
 import com.pushtorefresh.storio.contentresolver.operations.get.DefaultGetResolver;
@@ -25,7 +26,7 @@ public class ArticleMeta {
     static final PutResolver<Article> PUT_RESOLVER = new DefaultPutResolver<Article>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull Article object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull Article object) {
             return InsertQuery.builder()
                     .uri(CONTENT_URI)
                     .build();
@@ -33,7 +34,7 @@ public class ArticleMeta {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull Article article) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull Article article) {
             return UpdateQuery.builder()
                     .uri(CONTENT_URI)
                     .where(BaseColumns._ID + " = ?")
@@ -43,7 +44,7 @@ public class ArticleMeta {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull Article object) {
+        protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull Article object) {
             return mock(ContentValues.class);
         }
     };
@@ -51,7 +52,7 @@ public class ArticleMeta {
     static final GetResolver<Article> GET_RESOLVER = new DefaultGetResolver<Article>() {
         @NonNull
         @Override
-        public Article mapFromCursor(@NonNull Cursor cursor) {
+        public Article mapFromCursor(@NonNull StorIOContentResolver storIOContentResolver, @NonNull Cursor cursor) {
             return Article.newInstance(null, null); // in Design tests it does not matter
         }
     };
@@ -59,7 +60,7 @@ public class ArticleMeta {
     static final DeleteResolver<Article> DELETE_RESOLVER = new DefaultDeleteResolver<Article>() {
         @NonNull
         @Override
-        protected DeleteQuery mapToDeleteQuery(@NonNull Article article) {
+        protected DeleteQuery mapToDeleteQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull Article article) {
             return DeleteQuery.builder()
                     .uri(CONTENT_URI)
                     .where(BaseColumns._ID + " = ?")

@@ -70,13 +70,13 @@ public class DefaultPutResolverTest {
         final PutResolver<TestItem> putResolver = new DefaultPutResolver<TestItem>() {
             @NonNull
             @Override
-            protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+            protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return expectedInsertQuery;
             }
 
             @NonNull
             @Override
-            protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+            protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return UpdateQuery.builder()
                         .uri(TestItem.CONTENT_URI)
                         .where(TestItem.COLUMN_ID + " = ?")
@@ -86,7 +86,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected ContentValues mapToContentValues(@NonNull TestItem object) {
+            protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return TestItem.MAP_TO_CONTENT_VALUES.call(object);
             }
         };
@@ -162,14 +162,14 @@ public class DefaultPutResolverTest {
         final PutResolver<TestItem> putResolver = new DefaultPutResolver<TestItem>() {
             @NonNull
             @Override
-            protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+            protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 fail("Should not be called");
                 return null;
             }
 
             @NonNull
             @Override
-            protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+            protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return UpdateQuery.builder()
                         .uri(TestItem.CONTENT_URI)
                         .where(TestItem.COLUMN_ID + " = ?")
@@ -179,7 +179,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected ContentValues mapToContentValues(@NonNull TestItem object) {
+            protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return TestItem.MAP_TO_CONTENT_VALUES.call(object);
             }
         };
@@ -251,7 +251,7 @@ public class DefaultPutResolverTest {
         final PutResolver<TestItem> putResolver = new DefaultPutResolver<TestItem>() {
             @NonNull
             @Override
-            protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+            protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return InsertQuery.builder()
                         .uri(TestItem.CONTENT_URI)
                         .build();
@@ -259,7 +259,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+            protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return UpdateQuery.builder()
                         .uri(TestItem.CONTENT_URI)
                         .where(TestItem.COLUMN_ID + " = ?")
@@ -269,7 +269,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected ContentValues mapToContentValues(@NonNull TestItem object) {
+            protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return TestItem.MAP_TO_CONTENT_VALUES.call(object);
             }
         };
@@ -331,7 +331,7 @@ public class DefaultPutResolverTest {
         final PutResolver<TestItem> putResolver = new DefaultPutResolver<TestItem>() {
             @NonNull
             @Override
-            protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+            protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return InsertQuery.builder()
                         .uri(TestItem.CONTENT_URI)
                         .build();
@@ -339,7 +339,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+            protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return UpdateQuery.builder()
                         .uri(TestItem.CONTENT_URI)
                         .where(TestItem.COLUMN_ID + " = ?")
@@ -349,7 +349,7 @@ public class DefaultPutResolverTest {
 
             @NonNull
             @Override
-            protected ContentValues mapToContentValues(@NonNull TestItem object) {
+            protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
                 return TestItem.MAP_TO_CONTENT_VALUES.call(object);
             }
         };

@@ -89,7 +89,7 @@ public final class PreparedDeleteByQuery extends PreparedDelete<DeleteResult> {
         private static final DeleteResolver<DeleteQuery> STANDARD_DELETE_RESOLVER = new DefaultDeleteResolver<DeleteQuery>() {
             @NonNull
             @Override
-            protected DeleteQuery mapToDeleteQuery(@NonNull DeleteQuery deleteQuery) {
+            protected DeleteQuery mapToDeleteQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull DeleteQuery deleteQuery) {
                 return deleteQuery; // easy
             }
         };

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DefaultDeleteResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DeleteResolver;
 import com.pushtorefresh.storio.contentresolver.operations.get.DefaultGetResolver;
@@ -108,7 +109,7 @@ class TestItem {
     static final PutResolver<TestItem> PUT_RESOLVER = new DefaultPutResolver<TestItem>() {
         @NonNull
         @Override
-        protected InsertQuery mapToInsertQuery(@NonNull TestItem object) {
+        protected InsertQuery mapToInsertQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
             return InsertQuery.builder()
                     .uri(CONTENT_URI)
                     .build();
@@ -116,7 +117,7 @@ class TestItem {
 
         @NonNull
         @Override
-        protected UpdateQuery mapToUpdateQuery(@NonNull TestItem object) {
+        protected UpdateQuery mapToUpdateQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
             return UpdateQuery.builder()
                     .uri(CONTENT_URI)
                     .where(COLUMN_ID + "=?")
@@ -126,7 +127,7 @@ class TestItem {
 
         @NonNull
         @Override
-        protected ContentValues mapToContentValues(@NonNull TestItem object) {
+        protected ContentValues mapToContentValues(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
             return object.toContentValues();
         }
     };
@@ -135,7 +136,7 @@ class TestItem {
     static final GetResolver<TestItem> GET_RESOLVER = new DefaultGetResolver<TestItem>() {
         @NonNull
         @Override
-        public TestItem mapFromCursor(@NonNull Cursor cursor) {
+        public TestItem mapFromCursor(@NonNull StorIOContentResolver storIOContentResolver, @NonNull Cursor cursor) {
             return fromCursor(cursor);
         }
     };
@@ -144,7 +145,7 @@ class TestItem {
     static final DeleteResolver<TestItem> DELETE_RESOLVER = new DefaultDeleteResolver<TestItem>() {
         @NonNull
         @Override
-        protected DeleteQuery mapToDeleteQuery(@NonNull TestItem object) {
+        protected DeleteQuery mapToDeleteQuery(@NonNull StorIOContentResolver storIOContentResolver, @NonNull TestItem object) {
             return DeleteQuery.builder()
                     .uri(CONTENT_URI)
                     .where(COLUMN_ID + "=?")

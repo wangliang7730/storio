@@ -65,7 +65,7 @@ public class GetNumberOfResultsStub {
         when(getResolverForNumberOfResults.performGet(storIOContentResolver, query))
                 .thenReturn(cursor);
 
-        when(getResolverForNumberOfResults.mapFromCursor(cursor))
+        when(getResolverForNumberOfResults.mapFromCursor(storIOContentResolver, cursor))
                 .thenReturn(numberOfResults);
     }
 

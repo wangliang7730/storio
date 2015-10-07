@@ -184,7 +184,7 @@ public class PreparedGetListOfObjectsTest {
             when(getResolver.performGet(storIOContentResolver, query))
                     .thenReturn(cursor);
 
-            when(getResolver.mapFromCursor(cursor))
+            when(getResolver.mapFromCursor(storIOContentResolver, cursor))
                     .thenThrow(new IllegalStateException("Breaking execution"));
 
             when(cursor.getCount()).thenReturn(1);
