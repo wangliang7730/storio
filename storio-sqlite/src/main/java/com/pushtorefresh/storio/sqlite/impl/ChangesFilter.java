@@ -2,6 +2,7 @@ package com.pushtorefresh.storio.sqlite.impl;
 
 import android.support.annotation.NonNull;
 
+import com.pushtorefresh.storio.internal.OperatorOnBackpressureBufferAndMerge;
 import com.pushtorefresh.storio.sqlite.Changes;
 
 import java.util.Set;
@@ -16,7 +17,7 @@ import static com.pushtorefresh.storio.internal.Checks.checkNotNull;
  * <p>
  * Hides RxJava from ClassLoader via separate class.
  */
-final class ChangesFilter implements Func1<Changes, Boolean> {
+final class ChangesFilter implements Func1<String, Boolean> {
 
     @NonNull
     private final Set<String> tables;
@@ -29,18 +30,25 @@ final class ChangesFilter implements Func1<Changes, Boolean> {
     static Observable<Changes> apply(@NonNull Observable<Changes> rxBus, @NonNull Set<String> tables) {
         checkNotNull(tables, "Set of tables can not be null");
         return rxBus
-                .filter(new ChangesFilter(tables));
+                .flatMap(new Func1<Changes, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(Changes changes) {
+                        return Observable.from(changes.affectedTables());
+                    }
+                })
+                .lift(OperatorOnBackpressureBufferAndMerge.<String>instance())
+                .filter(new ChangesFilter(tables))
+                .map(new Func1<String, Changes>() {
+                    @Override
+                    public Changes call(@NonNull String changedTable) {
+                        return Changes.newInstance(changedTable);
+                    }
+                });
     }
 
     @Override
-    public Boolean call(Changes changes) {
-        // if one of changed tables found in tables for subscription -> notify observer
-        for (String affectedTable : changes.affectedTables()) {
-            if (tables.contains(affectedTable)) {
-                return true;
-            }
-        }
-
-        return false;
+    @NonNull
+    public Boolean call(@NonNull String changedTable) {
+        return tables.contains(changedTable);
     }
 }
