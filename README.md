@@ -1,5 +1,10 @@
 #### StorIO — modern API for SQLiteDatabase and ContentResolver
 
+M — Model in MVC, MVP, MVVC in Android（译者注：MVC，MVP，MVVC架构中Model层在Android中的定义） – Artem Zinnatullin
+https://medium.com/@artem_zin/m-model-from-mvc-mvp-in-android-flow-and-mortar-bd1e50c45395#.82qjulegz
+
+如果你不还了解Model层中的JSON与SQL，或者不能透彻理解Model层的图像模型，这篇文章将带你进一步理解什么是Model层以及为什么Model层独立于其他层。其中“Model layer is solution”部分很好的解释了如何通过面向接口的方式编写测试。
+
 #####Overview:
 * Powerful & Simple set of Operations: `Put`, `Get`, `Delete`
 * API for Humans: Type Safety, Immutability & Thread-Safety
